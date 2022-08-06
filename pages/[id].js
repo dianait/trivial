@@ -5,7 +5,9 @@ import AppLayout from "../components/AppLayout";
 import Twitter from "../components/twitter";
 
 export default function Resultado({ user }) {
-  console.log(user.puntuacion);
+  console.log("================================");
+  console.log(user);
+  console.log("================================");
   return (
     <>
       <AppLayout>
@@ -60,23 +62,13 @@ export default function Resultado({ user }) {
   );
 }
 
-export async function getStaticPaths() {
-  return {
-    paths: [{ params: { id: "@dianait_" } }, { params: { id: "@lerhus" } }],
-    fallback: false, // can also be true or 'blocking'
-  };
-}
-
-export async function getStaticProps({ params }) {
-  console.log(params.id);
-  const { data: user } = await supabase
+Resultado.getInitialProps = async (ctx) => {
+  const { query, res } = ctx;
+  const name = query.id;
+  const data = await supabase
     .from("ranking")
     .select("*")
-    .eq("userName", params.id)
+    .eq("userName", name)
     .single();
-  return {
-    props: {
-      user,
-    },
-  };
-}
+  return { user: data.body };
+};
