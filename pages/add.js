@@ -30,7 +30,7 @@ const fb = {
 
 export default function Add() {
   const [hide, setHide] = useState(false);
-  const [feedback, setFeedback] = useState(fb.ko);
+  const [feedback, setFeedback] = useState(fb.ok);
 
   const saveQuestion = async (evt) => {
     evt.preventDefault();
@@ -50,13 +50,13 @@ export default function Add() {
     };
     // uploadPhoto(evt);
     // console.log(newQuestion);
-    // const { data, error } = await supabase
-    //   .from("preguntas_posibles")
-    //   .insert([newQuestion]);
+    const { data, error } = await supabase
+     .from("preguntas_posibles")
+    .insert([newQuestion]);
 
-    // if (error) {
-    //   setFeedback(fb.ko);
-    // }
+     if (error) {
+      setFeedback(fb.ko);
+    }
 
     setHide(true);
   };
