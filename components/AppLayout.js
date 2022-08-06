@@ -15,7 +15,7 @@ export default function AppLayout({ children }) {
           <Image
             alt={"logo Luimelia"}
             src={`/images/logo.png`}
-            width="380px"
+            width="350px"
             height="63px"
           />
         </header>
