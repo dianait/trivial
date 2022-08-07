@@ -1,13 +1,8 @@
 import { supabase } from "../utils/supabase";
-import Counter from "../components/counter";
-import User from "../components/user";
 import AppLayout from "../components/AppLayout";
 import Twitter from "../components/twitter";
 
 export default function Resultado({ user }) {
-  console.log("================================");
-  console.log(user);
-  console.log("================================");
   return (
     <>
       <AppLayout>
@@ -63,7 +58,7 @@ export default function Resultado({ user }) {
 }
 
 Resultado.getInitialProps = async (ctx) => {
-  const { query, res } = ctx;
+  const { query } = ctx;
   const name = query.id;
   const data = await supabase
     .from("ranking")

@@ -9,7 +9,7 @@ import Twitter from "../components/twitter";
 import User from "../components/user";
 
 export default function Home({ lessons }) {
-  const [questions, setQuestions] = useState(lessons);
+  const [questions] = useState(lessons);
   const [idx, setIdx] = useState(0);
   const [question, setQuestion] = useState(lessons[idx]);
   const [fails, setFails] = useState(0);
@@ -19,7 +19,7 @@ export default function Home({ lessons }) {
 
   useEffect(() => {
     setQuestion(questions[idx]);
-    if (idx == questions.length) {
+    if (idx === questions.length) {
       setFinish(true);
     }
   }, [idx, questions]);
@@ -27,7 +27,7 @@ export default function Home({ lessons }) {
   const handle = (evt) => {
     const isCorrect = evt.target.attributes.attr.value;
     console.log(isCorrect);
-    if (isCorrect == "true") {
+    if (isCorrect === "true") {
       setCorrects(corrects + 1);
     } else {
       setFails(fails + 1);

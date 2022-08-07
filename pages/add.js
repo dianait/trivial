@@ -50,11 +50,11 @@ export default function Add() {
     };
     // uploadPhoto(evt);
     // console.log(newQuestion);
-    const { data, error } = await supabase
-     .from("preguntas_posibles")
-    .insert([newQuestion]);
+    const { error } = await supabase
+      .from("preguntas_posibles")
+      .insert([newQuestion]);
 
-     if (error) {
+    if (error) {
       setFeedback(fb.ko);
     }
 

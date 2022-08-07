@@ -1,4 +1,3 @@
-import { supabase } from "../utils/supabase";
 import Twitter from "../components/twitter";
 
 export default function Login({ handle }) {

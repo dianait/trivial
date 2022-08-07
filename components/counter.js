@@ -1,5 +1,3 @@
-import Salir from "../components/salir";
-
 export default function Counter({ correctCount, failsCount, finish }) {
   return (
     <>
