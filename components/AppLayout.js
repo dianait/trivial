@@ -23,7 +23,7 @@ export default function AppLayout({ children }) {
           align-content: center;
           background-color: #276c7f;
           color: white;
-          width: 120%;
+          width: 60vh;
           margin: -1px 0 0 0;
           padding-bottom: 40px;
           border: 2px solid #ccc;
@@ -56,8 +56,7 @@ export default function AppLayout({ children }) {
 
           header {
             border-radius: 10px 10px 0 0;
-            min-width: 30vh;
-            max-width: 60vh;
+            width: 100%;
           }
         }
       `}</style>
