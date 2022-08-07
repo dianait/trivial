@@ -23,7 +23,6 @@ export default function Pregunta({ pregunta, respuestas, image, handle }) {
           text-align: center;
         }
         div {
-          border: 2px solid #ccc;
           border-radius: 4px;
           width: 100%;
           height: 100%;

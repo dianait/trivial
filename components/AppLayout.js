@@ -22,11 +22,10 @@ export default function AppLayout({ children }) {
           justify-content: center;
           align-content: center;
           background-color: #276c7f;
-          color: white;
           width: 60vh;
+          color: white;
           margin: -1px 0 0 0;
           padding-bottom: 40px;
-          border: 2px solid #ccc;
         }
 
         h1 {
