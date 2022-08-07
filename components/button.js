@@ -9,7 +9,7 @@ export default function button({ respuesta, handle }) {
           background-color: #276c7f;
           color: white;
           border: 2px solid transparent;
-          width: 100%;
+          width: 96%;
           padding: 10px 20px;
           border-radius: 5px;
           font-size: 1.2rem;

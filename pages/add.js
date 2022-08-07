@@ -2,18 +2,7 @@ import { supabase } from "../utils/supabase";
 import AppLayout from "../components/AppLayout";
 import Feedback from "../components/feedback";
 import { useState } from "react";
-
-// const uploadPhoto = async (event) => {
-//   const avatarFile = event.target.elements.image;
-//   const { data, error } = await supabase.storage
-//     .from("images")
-//     .upload("public/avatar1.png", avatarFile, {
-//       cacheControl: "3600",
-//       upsert: false,
-//     });
-
-//   if (error) console.log(error);
-// };
+import Pregunta from "../components/pregunta";
 
 const fb = {
   ok: {
@@ -30,11 +19,37 @@ const fb = {
 
 export default function Add() {
   const [hide, setHide] = useState(false);
+  const [preview, setPreview] = useState(false);
   const [feedback, setFeedback] = useState(fb.ok);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [imageName, setImageName] = useState("");
+
+  const uploadPhoto = async (event) => {
+    event.preventDefault();
+    if (event.currentTarget.files && event.currentTarget.files[0]) {
+      const avatarFile = event.currentTarget.files[0];
+
+      const imageName = avatarFile.name;
+      const { data, error } = await supabase.storage
+        .from("images")
+        .upload(imageName, avatarFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      if (error) console.log(error);
+      else {
+        console.log(data);
+        setImageName(imageName);
+        console.log(imageName);
+        console.log(`Se ha guardado la imagen ${imageName} correctamente`);
+      }
+    }
+  };
 
   const saveQuestion = async (evt) => {
     evt.preventDefault();
-    const { pregunta, correcta, incorrecta1, incorrecta2, image } =
+    const { pregunta, correcta, incorrecta1, incorrecta2 } =
       evt.target.elements;
     const newQuestion = {
       id: +Date.now(),
@@ -45,28 +60,46 @@ export default function Add() {
           { text: incorrecta1.value, isCorrect: false },
           { text: incorrecta2.value, isCorrect: false },
         ],
-        image: image.value,
       },
+      image: imageName,
     };
-    // uploadPhoto(evt);
-    // console.log(newQuestion);
+    console.log(newQuestion);
+    setCurrentQuestion(newQuestion);
+    setPreview(!preview);
+  };
+
+  const confirm = async (evt) => {
     const { error } = await supabase
       .from("preguntas_posibles")
-      .insert([newQuestion]);
+      .insert([currentQuestion]);
 
     if (error) {
       setFeedback(fb.ko);
     }
-
     setHide(true);
+    setPreview(false);
   };
 
   return (
     <>
       <AppLayout>
-        {hide ? (
-          <Feedback img={feedback.img} texto={feedback.texto} />
-        ) : (
+        {hide ? <Feedback {...feedback} /> : null}
+        {preview && (
+          <>
+            <Pregunta
+              pregunta={currentQuestion.pregunta}
+              image={imageName}
+              respuestas={currentQuestion.respuestas}
+              handle={() => {
+                console.log("preview");
+              }}
+            />
+            <button type="button" onClick={confirm}>
+              Guardar
+            </button>
+          </>
+        )}
+        {!preview & !hide && (
           <>
             <h1>Añade una pregunta</h1>
             <form onSubmit={saveQuestion}>
@@ -97,8 +130,13 @@ export default function Add() {
                 placeholder="Respuesta incorrecta"
                 // required
               />
-              <input type="file" name="image" placeholder="Imagen" />
-              <button type="submit">Añadir</button>
+              <input
+                type="file"
+                name="image"
+                placeholder="Imagen"
+                onChange={uploadPhoto}
+              />
+              <button type="submit">Ver preview</button>
             </form>
           </>
         )}

@@ -5,8 +5,8 @@ import AppLayout from "../components/AppLayout";
 import { useState, useEffect } from "react";
 import Counter from "../components/counter";
 import { useAuth } from "../utils/auth";
-import Twitter from "../components/twitter";
 import User from "../components/user";
+import { useRouter } from "next/router";
 
 export default function Home({ lessons }) {
   const [questions] = useState(lessons);
@@ -15,18 +15,33 @@ export default function Home({ lessons }) {
   const [fails, setFails] = useState(0);
   const [corrects, setCorrects] = useState(0);
   const { user, signOut, signIn } = useAuth();
-  const [finish, setFinish] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setQuestion(questions[idx]);
     if (idx === questions.length) {
-      setFinish(true);
+      const ranking = {
+        id: +Date.now(),
+        userName: user.user_metadata.user_name,
+        puntuaciom: `${corrects}/${question.length}`,
+        texto: "",
+        personaje: "",
+        imagen: "",
+        avatar: user.user_metadata.avatar_url,
+      };
+      const insertRanking = async () => {
+        const { error } = await supabase.from("ranking").insert([ranking]);
+        if (error) {
+          console.log(ranking);
+        }
+      };
+      insertRanking();
+      router.replace(`/@${user.user_metadata.user_name}`);
     }
   }, [idx, questions]);
 
   const handle = (evt) => {
     const isCorrect = evt.target.attributes.attr.value;
-    console.log(isCorrect);
     if (isCorrect === "true") {
       setCorrects(corrects + 1);
     } else {
@@ -35,7 +50,6 @@ export default function Home({ lessons }) {
     setIdx((prev) => prev + 1);
   };
 
-  console.log(idx);
   return (
     <>
       <AppLayout>
@@ -46,29 +60,15 @@ export default function Home({ lessons }) {
               avatar={user.user_metadata.avatar_url}
               signout={signOut}
             />
-            <Counter
-              correctCount={corrects}
-              failsCount={fails}
-              finish={finish}
-            />
-            {finish ? (
-              <>
-                <h1>¡Hemos terminado!</h1>
-                <button>
-                  <Twitter />
-                  Compartir en twitter
-                </button>
-              </>
-            ) : (
-              <>
-                <Pregunta
-                  key={question.id}
-                  pregunta={question.pregunta}
-                  respuestas={question.respuestas}
-                  image={question.image}
-                  handle={handle}
-                />
-              </>
+            <Counter correctCount={corrects} failsCount={fails} />
+            {idx < questions.length && (
+              <Pregunta
+                key={question.id}
+                pregunta={question.pregunta}
+                respuestas={question.respuestas}
+                image={question.image}
+                handle={handle}
+              />
             )}
           </>
         ) : (
@@ -97,7 +97,6 @@ export default function Home({ lessons }) {
 
 export const getStaticProps = async () => {
   const { data: lessons } = await supabase.from("preguntas").select("*");
-
   return {
     props: {
       lessons,
