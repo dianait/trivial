@@ -3,6 +3,9 @@ import AppLayout from "../components/AppLayout";
 import Feedback from "../components/feedback";
 import { useState } from "react";
 import Pregunta from "../components/pregunta";
+import { useAuth } from "../utils/auth";
+import User from "../components/user";
+import Login from "../components/login";
 
 const fb = {
   ok: {
@@ -23,6 +26,7 @@ export default function Add() {
   const [feedback, setFeedback] = useState(fb.ok);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [imageName, setImageName] = useState("");
+  const { user, signOut, signIn } = useAuth();
 
   const uploadPhoto = async (event) => {
     event.preventDefault();
@@ -62,6 +66,7 @@ export default function Add() {
         ],
       },
       image: imageName,
+      user: user.user_metadata.user_name,
     };
     console.log(newQuestion);
     setCurrentQuestion(newQuestion);
@@ -83,6 +88,15 @@ export default function Add() {
   return (
     <>
       <AppLayout>
+        {user ? (
+          <User
+            userName={user.user_metadata.user_name}
+            avatar={user.user_metadata.avatar_url}
+            signout={signOut}
+          />
+        ) : (
+          <Login handle={signIn} />
+        )}
         {hide ? <Feedback {...feedback} /> : null}
         {preview && (
           <>
