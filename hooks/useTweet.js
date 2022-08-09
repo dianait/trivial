@@ -6,7 +6,7 @@ export default function useTweet(user) {
   useEffect(() => {
     const tweetInfo = {
       text: `He sacado un ${user.puntuacion} en el Trivial Luimelier 🥐 ¡Haz el tuyo!`,
-      url: `https://localhost:3000/${user.userName}`,
+      url: `https://trivial-liard.vercel.app/${user.userName}`,
     };
 
     const urlTweet = getUrlShareTwitter(tweetInfo);
