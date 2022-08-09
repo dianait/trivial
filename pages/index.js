@@ -19,7 +19,7 @@ export default function Home({ lessons }) {
   const router = useRouter();
 
   const getPreviousRanking = async () => {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("ranking")
       .delete()
       .match({ userName: user.user_metadata.user_name });
