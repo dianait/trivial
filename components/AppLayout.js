@@ -10,11 +10,14 @@ export default function AppLayout({ children }) {
         </Head>
         <header>
           <h1>TRIVIAL 🥐</h1>
-          <img src="/images/logo.png" width="75%" />
+          <img src="/images/logo.png" width="70%" />
         </header>
         {children}
       </section>
       <style jsx>{`
+      body {
+      
+      }
         header {
           display: flex;
           flex-direction: column;
@@ -26,6 +29,7 @@ export default function AppLayout({ children }) {
           color: white;
           margin: -1px 0 0 0;
           padding-bottom: 40px;
+          overflow-x: hidden;
         }
 
         h1 {
@@ -43,6 +47,8 @@ export default function AppLayout({ children }) {
           max-width: 60vh;
           padding: 0 2rem;
           border-radius: 10px;
+          overflow-x: hidden;
+          
         }
 
         @media (min-width: 520px) {
