@@ -33,7 +33,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged --no-cache"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
