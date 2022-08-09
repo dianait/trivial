@@ -29,7 +29,6 @@ export default function AppLayout({ children }) {
           color: white;
           margin: -1px 0 0 0;
           padding-bottom: 40px;
-          overflow-x: hidden;
         }
 
         h1 {
@@ -47,7 +46,6 @@ export default function AppLayout({ children }) {
           max-width: 60vh;
           padding: 0 2rem;
           border-radius: 10px;
-          overflow-x: hidden;
           
         }
 
