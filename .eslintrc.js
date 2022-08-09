@@ -9,13 +9,19 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
+    "jest/globals": true,
   },
   settings: {
     react: {
       version: "detect",
     },
   },
-  extends: ["plugin:react/recommended", "standard", "prettier"],
+  extends: [
+    "plugin:jest/recommended",
+    "plugin:react/recommended",
+    "standard",
+    "prettier",
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,

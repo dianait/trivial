@@ -1,39 +1,57 @@
 import { supabase } from "../utils/supabase";
 import AppLayout from "../components/AppLayout";
 import Twitter from "../components/twitter";
+import useTweet from "../hooks/useTweet";
+import Link from "next/link";
 
-export default function Resultado({ user }) {
+export default function Resultado({ user, resultado }) {
+  const tweet = useTweet(user);
+  const { publicURL, error } = supabase.storage
+    .from("images")
+    .getPublicUrl(`${resultado.imagen}`);
+  if (error) {
+    console.log(error);
+  }
   return (
     <>
       <AppLayout>
-        <div>
+        <h3>
           <img className="userAvatar" src={user.avatar} />
-          <h2>¡Enhorabuena {user.userName}! </h2>
-        </div>
-        <h3>Has conseguido {user.puntuacion}</h3>
-        <h1>{`🥐 ${user.personaje} `}</h1>
-        <img src="./images/luimelia.jpeg" width="100%" />
-        <p>{user.texto}</p>
-        <button>
+          {user.userName}, has conseguido {user.puntuacion}
+        </h3>
+        <h1>{resultado.titulo}</h1>
+        <img src={publicURL} width="100%" />
+        <p>{resultado.texto}</p>
+        <a href={tweet}>
           <Twitter />
-          Compartir en twitter
-        </button>
-        <button>Jugar otra vez</button>
+          &nbsp;&nbsp; Compartir en twitter
+        </a>
+        <Link href="/">
+          <a>Jugar otra vez</a>
+        </Link>
       </AppLayout>
       <style jsx>{`
-        button {
+        button,
+        a {
           display: flex;
           align-items: center;
-          justify-content: space-around;
+          justify-content: center;
+          align-content: center;
           background-color: #2b8cc9;
           color: white;
-          width: 240px;
+          width: 260px;
           height: 50px;
           font-size: 1.2rem;
           border: none;
           border-radius: 5px;
           margin-top: 8px;
           cursor: pointer;
+        }
+        h3 {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 32px;
         }
 
         img.userAvatar {
@@ -50,7 +68,12 @@ export default function Resultado({ user }) {
           margin-bottom: -16px;
         }
         h1 {
-          margin-top: 0.2rem;
+          margin-top: 0rem;
+          font-size: 2rem;
+        }
+        p {
+          font-size: 1.3rem;
+          line-height: 1.7rem;
         }
       `}</style>
     </>
@@ -65,5 +88,11 @@ Resultado.getInitialProps = async (ctx) => {
     .select("*")
     .eq("userName", name)
     .single();
-  return { user: data.body };
+
+  const resultadoInfo = await supabase
+    .from("resultados")
+    .select("*")
+    .eq("id", data.body.resultado)
+    .single();
+  return { user: data.body, resultado: resultadoInfo.body };
 };

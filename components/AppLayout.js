@@ -15,9 +15,8 @@ export default function AppLayout({ children }) {
         {children}
       </section>
       <style jsx>{`
-      body {
-      
-      }
+        body {
+        }
         header {
           display: flex;
           flex-direction: column;
@@ -26,6 +25,7 @@ export default function AppLayout({ children }) {
           align-content: center;
           background-color: #276c7f;
           width: 60vh;
+          margin: 0 auto;
           color: white;
           margin: -1px 0 0 0;
           padding-bottom: 40px;
@@ -46,15 +46,19 @@ export default function AppLayout({ children }) {
           max-width: 60vh;
           padding: 0 2rem;
           border-radius: 10px;
-          
         }
 
         @media (min-width: 520px) {
           section {
-            margin: 2rem auto;
             border: 1px solid #ccc;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-width: 30vh;
+            max-width: 60vh;
           }
 
           header {

@@ -7,9 +7,10 @@ import Counter from "../components/counter";
 import { useAuth } from "../utils/auth";
 import User from "../components/user";
 import { useRouter } from "next/router";
+import { shuffle, getTextResult, getPercent } from "../utils/utils";
 
 export default function Home({ lessons }) {
-  const [questions] = useState(lessons);
+  const [questions] = useState(shuffle(lessons));
   const [idx, setIdx] = useState(0);
   const [question, setQuestion] = useState(lessons[idx]);
   const [fails, setFails] = useState(0);
@@ -17,35 +18,48 @@ export default function Home({ lessons }) {
   const { user, signOut, signIn } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    setQuestion(questions[idx]);
-    if (idx === questions.length) {
-      const ranking = {
-        id: +Date.now(),
-        userName: user.user_metadata.user_name,
-        puntuaciom: `${corrects}/${question.length}`,
-        texto: "",
-        personaje: "",
-        imagen: "",
-        avatar: user.user_metadata.avatar_url,
-      };
-      const insertRanking = async () => {
-        const { error } = await supabase.from("ranking").insert([ranking]);
-        if (error) {
-          console.log(ranking);
-        }
-      };
-      insertRanking();
-      router.replace(`/@${user.user_metadata.user_name}`);
+  const getPreviousRanking = async () => {
+    const { data, error } = await supabase
+      .from("ranking")
+      .delete()
+      .match({ userName: user.user_metadata.user_name });
+    if (error) console.log(error);
+  };
+
+  const insertRanking = async (ranking) => {
+    const { error } = await supabase.from("ranking").insert([ranking]);
+    if (error) {
+      console.log(error);
     }
-  }, [idx, questions]);
+  };
+
+  const createRanking = () => {
+    return {
+      id: +Date.now(),
+      userName: `@${user.user_metadata.user_name}`,
+      puntuacion: `${corrects}/${questions.length}`,
+      avatar: user.user_metadata.avatar_url,
+      resultado: getTextResult(getPercent(corrects, questions.length)),
+    };
+  };
+
+  useEffect(() => {
+    if (idx === questions.length) {
+      getPreviousRanking();
+      const ranking = createRanking();
+      insertRanking(ranking);
+      router.replace(`/@${user.user_metadata.user_name}`);
+    } else {
+      setQuestion(questions[idx]);
+    }
+  }, [idx]);
 
   const handle = (evt) => {
     const isCorrect = evt.target.attributes.attr.value;
     if (isCorrect === "true") {
-      setCorrects(corrects + 1);
+      setCorrects((prev) => prev + 1);
     } else {
-      setFails(fails + 1);
+      setFails((prev) => prev + 1);
     }
     setIdx((prev) => prev + 1);
   };

@@ -5,7 +5,7 @@ export default function Login({ handle }) {
     <>
       <button onClick={handle}>
         <Twitter />
-        login con twitter
+        Login con Twitter
       </button>
       <style jsx>{`
         button {
@@ -14,7 +14,7 @@ export default function Login({ handle }) {
           justify-content: space-around;
           background-color: #2b8cc9;
           color: white;
-          width: 200px;
+          width: 240px;
           height: 50px;
           font-size: 1.2rem;
           border: none;

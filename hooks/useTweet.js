@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 
-export default function useTweet({ score, userName }) {
+export default function useTweet(user) {
   const [tweet, setTweet] = useState();
 
   useEffect(() => {
     const tweetInfo = {
-      text: `He sacado un ${score} en el Trivial Luimelier 🥐 ¡Haz el tuyo!`,
-      url: `https://localhost:3000/${userName}`,
+      text: `He sacado un ${user.puntuacion} en el Trivial Luimelier 🥐 ¡Haz el tuyo!`,
+      url: `https://localhost:3000/${user.userName}`,
     };
 
     const urlTweet = getUrlShareTwitter(tweetInfo);
     setTweet(urlTweet);
-  }, [userName, score]);
+  }, [user]);
 
   return tweet;
 }

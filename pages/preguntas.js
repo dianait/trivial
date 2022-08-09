@@ -118,6 +118,9 @@ export default function Preguntas({ lessons }) {
           margin-top: 1rem;
           cursor: pointer;
         }
+        h2 {
+          text-align: center;
+        }
       `}</style>
     </AppLayout>
   );
