@@ -1,7 +1,8 @@
 import { useState } from "react";
+import Login from "../components";
 import AppLayout from "../components/AppLayout";
+import Aviso from "../components/aviso";
 import Feedback from "../components/feedback";
-import Login from "../components/login";
 import Pregunta from "../components/pregunta";
 import User from "../components/user";
 import { useAuth } from "../utils/auth";
@@ -121,6 +122,7 @@ export default function Add() {
         )}
         {!preview & !hide && (
           <>
+            <Aviso />
             <h1>Añade una pregunta</h1>
             <form onSubmit={saveQuestion}>
               <input

@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Error({ texto, boton }) {
   return (
     <>
-      <img src="./images/asturiano.webp" width="100%" />
+      <img src="./images/asturiano.png" width="100%" />
       <h2>{texto}</h2>
       <Link href="/">
         <a>{boton}</a>
