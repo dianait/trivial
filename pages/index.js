@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import AppLayout from "../components/AppLayout";
+import Banner from "../components/banner";
 import Counter from "../components/counter";
 import Index from "../components/index";
 import Pregunta from "../components/pregunta";
@@ -87,6 +88,7 @@ export default function Home({ lessons }) {
                 handle={handle}
               />
             )}
+            <Banner />
           </>
         ) : (
           <Index handle={signIn} />
