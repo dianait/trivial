@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Twitter from "./twitter";
 
 export default function Index({ handle }) {
@@ -15,9 +14,7 @@ export default function Index({ handle }) {
           👋 ¿Se te ocurre alguna pregunta? <br />
           Compartir es vivir
         </h3>
-        <Link href="/add">
-          <a>Añadir pregunta</a>
-        </Link>
+        <a href="/add">Añadir pregunta</a>
         <br />
         <br />
       </section>
