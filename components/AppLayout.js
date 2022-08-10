@@ -8,10 +8,12 @@ export default function AppLayout({ children }) {
           <title>Trivial Luimelia 🥐</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <header>
-          <h1>TRIVIAL 🥐</h1>
-          <img src="/images/logo.png" width="70%" />
-        </header>
+        <a href="/">
+          <header>
+            <h1>TRIVIAL 🥐</h1>
+            <img src="/images/logo.png" width="70%" />
+          </header>
+        </a>
         {children}
       </section>
       <style jsx>{`

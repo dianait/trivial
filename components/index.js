@@ -1,14 +1,11 @@
-import Twitter from "./twitter";
+import Login from "../components/login";
 
 export default function Index({ handle }) {
   return (
     <>
       <img src="./images/luimeliaAsturiano.webp" />
       <h3>¿Crees saberlo de todo de nuestra pareja preferida? ¡Demuéstralo!</h3>
-      <button onClick={handle}>
-        <Twitter />
-        Login con Twitter
-      </button>
+      <Login handle={handle} />
       <section>
         <h3>
           👋 ¿Se te ocurre alguna pregunta? <br />
