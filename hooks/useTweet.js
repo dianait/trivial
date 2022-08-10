@@ -1,14 +1,12 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function useTweet(user) {
   const [tweet, setTweet] = useState();
-  const router = useRouter();
 
   useEffect(() => {
     const tweetInfo = {
       text: `He sacado un ${user.puntuacion} en el Trivial Luimelier 🥐 ¡Haz el tuyo!`,
-      url: `${router.pathname}${user.userName}`,
+      url: `${window.location.hostname}/${user.userName}`,
     };
 
     const urlTweet = getUrlShareTwitter(tweetInfo);

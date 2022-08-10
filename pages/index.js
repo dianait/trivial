@@ -1,13 +1,13 @@
-import { supabase } from "../utils/supabase";
-import Pregunta from "../components/pregunta";
-import Login from "../components/login";
-import AppLayout from "../components/AppLayout";
-import { useState, useEffect } from "react";
-import Counter from "../components/counter";
-import { useAuth } from "../utils/auth";
-import User from "../components/user";
 import { useRouter } from "next/router";
-import { shuffle, getTextResult, getPercent } from "../utils/utils";
+import { useEffect, useState } from "react";
+import AppLayout from "../components/AppLayout";
+import Counter from "../components/counter";
+import Index from "../components/index";
+import Pregunta from "../components/pregunta";
+import User from "../components/user";
+import { useAuth } from "../utils/auth";
+import { supabase } from "../utils/supabase";
+import { getPercent, getTextResult, shuffle } from "../utils/utils";
 
 export default function Home({ lessons }) {
   const [questions] = useState(shuffle(lessons));
@@ -27,7 +27,8 @@ export default function Home({ lessons }) {
   };
 
   const insertRanking = async (ranking) => {
-    const { error } = await supabase.from("ranking").insert([ranking]);
+    const { data, error } = await supabase.from("ranking").insert([ranking]);
+    localStorage.setItem("resultado", data[0].id);
     if (error) {
       console.log(error);
     }
@@ -45,7 +46,9 @@ export default function Home({ lessons }) {
 
   useEffect(() => {
     if (idx === questions.length) {
-      deletePreviousRanking();
+      if (localStorage.getItem("resultado")) {
+        deletePreviousRanking();
+      }
       const ranking = createRanking();
       insertRanking(ranking);
       router.replace(`/@${user.user_metadata.user_name}`);
@@ -86,7 +89,7 @@ export default function Home({ lessons }) {
             )}
           </>
         ) : (
-          <Login handle={signIn} />
+          <Index handle={signIn} />
         )}
       </AppLayout>
       <style jsx>{`

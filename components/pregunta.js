@@ -1,24 +1,12 @@
 import Button from "../components/button";
-import { supabase } from "../utils/supabase";
+import { shuffle } from "../utils/utils";
 
 export default function Pregunta({ pregunta, respuestas, image, handle }) {
-  function shuffle(array) {
-    return [...array].sort(() => Math.random() - 0.5);
-  }
-
   const answerShuffled = shuffle(respuestas.respuestas);
-
-  const { publicURL, error } = supabase.storage
-    .from("images")
-    .getPublicUrl(`${image}`);
-
-  if (error) {
-    console.log(error);
-  }
   return (
     <div>
       <h2>{pregunta}</h2>
-      <img src={publicURL} width="100%" object-fit="cover" />
+      <img src={image} width="100%" object-fit="cover" />
       {respuestas != null &&
         answerShuffled.map((respuesta, idx) => {
           return <Button key={idx} respuesta={respuesta} handle={handle} />;

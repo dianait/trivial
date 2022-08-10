@@ -1,11 +1,11 @@
-import { supabase } from "../utils/supabase";
-import AppLayout from "../components/AppLayout";
 import { useState } from "react";
-import Pregunta from "../components/pregunta";
-import { useAuth } from "../utils/auth";
-import User from "../components/user";
+import AppLayout from "../components/AppLayout";
+import Error from "../components/error";
 import Login from "../components/login";
-import Link from "next/link";
+import Pregunta from "../components/pregunta";
+import User from "../components/user";
+import { useAuth } from "../utils/auth";
+import { supabase } from "../utils/supabase";
 
 export default function Preguntas({ lessons }) {
   const [questions] = useState(lessons);
@@ -45,14 +45,10 @@ export default function Preguntas({ lessons }) {
         <Login handle={signIn} />
       )}
       {questions.length === 0 && (
-        <>
-          <h2>¡Ups! El asturiano está cerrado y no hay preguntas</h2>
-          <img src="./images/asturiano.webp" width="100%" />
-
-          <Link href="/add">
-            <a>Añadir pregunta</a>
-          </Link>
-        </>
+        <Error
+          texto="¡Ups! Parece que el asturiano está cerrado y todavía no hay ninguna pregunta"
+          boton="Añadir pregunta"
+        />
       )}
       {questions.map((q, idx) => {
         return (

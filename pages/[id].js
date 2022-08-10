@@ -1,34 +1,37 @@
-import { supabase } from "../utils/supabase";
+import Link from "next/link";
 import AppLayout from "../components/AppLayout";
+import Error from "../components/error";
 import Twitter from "../components/twitter";
 import useTweet from "../hooks/useTweet";
-import Link from "next/link";
+import { supabase } from "../utils/supabase";
 
-export default function Resultado({ user, resultado }) {
-  const tweet = useTweet(user);
-  const { publicURL, error } = supabase.storage
-    .from("images")
-    .getPublicUrl(`${resultado.imagen}`);
-  if (error) {
-    console.log(error);
-  }
+export default function Resultado({ data }) {
   return (
     <>
       <AppLayout>
-        <h3>
-          <img className="userAvatar" src={user.avatar} />
-          {user.userName}, has conseguido {user.puntuacion}
-        </h3>
-        <h1>{resultado.titulo}</h1>
-        <img src={publicURL} width="100%" />
-        <p>{resultado.texto}</p>
-        <a href={tweet}>
-          <Twitter />
-          &nbsp;&nbsp; Compartir en twitter
-        </a>
-        <Link href="/">
-          <a>Jugar otra vez</a>
-        </Link>
+        {data ? (
+          <>
+            <h3>
+              <img className="userAvatar" src={data.avatar} />
+              {data.userName}, has conseguido {data.puntuacion}
+            </h3>
+            <h1>{data.resultado.titulo}</h1>
+            <img src={data.resultado.imagen} width="100%" />
+            <p>{data.resultado.texto}</p>
+            <a href={useTweet(data)}>
+              <Twitter />
+              &nbsp;&nbsp; Compartir en twitter
+            </a>
+            <Link href="/">
+              <a>Jugar otra vez</a>
+            </Link>
+          </>
+        ) : (
+          <Error
+            texto="¡Ups! Parece que el asturiano está cerrado y todavía no has jugado ¿A qué estás esperando?"
+            boton="Jugar"
+          />
+        )}
       </AppLayout>
       <style jsx>{`
         button,
@@ -83,16 +86,10 @@ export default function Resultado({ user, resultado }) {
 Resultado.getInitialProps = async (ctx) => {
   const { query } = ctx;
   const name = query.id;
-  const data = await supabase
+  const raw = await supabase
     .from("ranking")
-    .select("*")
+    .select(`userName,puntuacion, avatar, resultado(imagen, texto, titulo)`)
     .eq("userName", name)
     .single();
-
-  const resultadoInfo = await supabase
-    .from("resultados")
-    .select("*")
-    .eq("id", data.body.resultado)
-    .single();
-  return { user: data.body, resultado: resultadoInfo.body };
+  return { data: raw.body };
 };

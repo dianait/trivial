@@ -1,11 +1,11 @@
-import { supabase } from "../utils/supabase";
+import { useState } from "react";
 import AppLayout from "../components/AppLayout";
 import Feedback from "../components/feedback";
-import { useState } from "react";
-import Pregunta from "../components/pregunta";
-import { useAuth } from "../utils/auth";
-import User from "../components/user";
 import Login from "../components/login";
+import Pregunta from "../components/pregunta";
+import User from "../components/user";
+import { useAuth } from "../utils/auth";
+import { supabase } from "../utils/supabase";
 
 const fb = {
   ok: {
@@ -53,6 +53,12 @@ export default function Add() {
 
   const saveQuestion = async (evt) => {
     evt.preventDefault();
+    const { publicURL, error } = supabase.storage
+      .from("images")
+      .getPublicUrl(`${imageName}`);
+    if (error) {
+      console.log(error);
+    }
     const { pregunta, correcta, incorrecta1, incorrecta2 } =
       evt.target.elements;
     const newQuestion = {
@@ -65,7 +71,7 @@ export default function Add() {
           { text: incorrecta2.value, isCorrect: false },
         ],
       },
-      image: imageName,
+      image: publicURL,
       user: user.user_metadata.user_name,
     };
     console.log(newQuestion);
