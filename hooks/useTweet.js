@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function useTweet(user) {
   const [tweet, setTweet] = useState();
+  const router = useRouter();
 
   useEffect(() => {
     const tweetInfo = {
       text: `He sacado un ${user.puntuacion} en el Trivial Luimelier 🥐 ¡Haz el tuyo!`,
-      url: `https://trivial-liard.vercel.app/${user.userName}`,
+      url: `${router.pathname}${user.userName}`,
     };
 
     const urlTweet = getUrlShareTwitter(tweetInfo);

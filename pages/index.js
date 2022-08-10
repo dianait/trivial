@@ -18,7 +18,7 @@ export default function Home({ lessons }) {
   const { user, signOut, signIn } = useAuth();
   const router = useRouter();
 
-  const getPreviousRanking = async () => {
+  const deletePreviousRanking = async () => {
     const { error } = await supabase
       .from("ranking")
       .delete()
@@ -45,7 +45,7 @@ export default function Home({ lessons }) {
 
   useEffect(() => {
     if (idx === questions.length) {
-      getPreviousRanking();
+      deletePreviousRanking();
       const ranking = createRanking();
       insertRanking(ranking);
       router.replace(`/@${user.user_metadata.user_name}`);
