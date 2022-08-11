@@ -1,12 +1,19 @@
 import Button from "../components/button";
 import { shuffle } from "../utils/utils";
+import Image from "next/image";
 
 export default function Pregunta({ pregunta, respuestas, image, handle }) {
   const answerShuffled = shuffle(respuestas.respuestas);
   return (
     <div>
       <h2>{pregunta}</h2>
-      <img src={image} width="100%" object-fit="cover" />
+      <Image
+        src={`/images/${image}`}
+        alt={image}
+        width={800}
+        height={430}
+        style={{ marginLeft: "16px" }}
+      />
       {respuestas != null &&
         answerShuffled.map((respuesta, idx) => {
           return <Button key={idx} respuesta={respuesta} handle={handle} />;
