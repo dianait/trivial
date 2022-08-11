@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install",
     "test": "jest --watch"
   },
   "dependencies": {
@@ -24,26 +23,10 @@
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-jest": "^26.8.2",
     "eslint-plugin-react": "7.30.1",
-    "husky": "8.0.1",
-    "jest": "^28.1.3",
+    "jest": "28.1.3",
     "jest-environment-jsdom": "^28.1.3",
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
-    "prettier-plugin-organize-imports": "^3.0.3",
     "standard": "17.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,css,md}": "prettier --write",
-    "*.js": "eslint --fix"
-  },
-  "prettier": {
-    "plugins": [
-      "./node_modules/prettier-plugin-organize-imports"
-    ]
   }
 }

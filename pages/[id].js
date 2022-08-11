@@ -1,4 +1,3 @@
-import Link from "next/link";
 import AppLayout from "../components/AppLayout";
 import Error from "../components/error";
 import Twitter from "../components/twitter";
@@ -22,9 +21,6 @@ export default function Resultado({ data }) {
               <Twitter />
               &nbsp;&nbsp; Compartir en twitter
             </a>
-            <Link href="/">
-              <a>Jugar otra vez</a>
-            </Link>
           </>
         ) : (
           <Error

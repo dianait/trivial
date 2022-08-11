@@ -1,6 +1,6 @@
 import Twitter from "./twitter";
 
-export default function Login({ handle }) {
+export default function LoginButton({ handle }) {
   return (
     <>
       <button onClick={handle}>

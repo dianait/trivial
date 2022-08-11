@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import AppLayout from "../components/AppLayout";
 import Aviso from "../components/aviso";
 import Feedback from "../components/feedback";
-import Login from "../components/login";
 import Pregunta from "../components/pregunta";
 import User from "../components/user";
 import { useAuth } from "../utils/auth";
 import { supabase } from "../utils/supabase";
+import BannerWithImage from "../components/bannerWithImage";
 
 const fb = {
   ok: {
@@ -27,7 +28,14 @@ export default function Add() {
   const [feedback, setFeedback] = useState(fb.ok);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [imageName, setImageName] = useState("");
-  const { user, signOut, signIn } = useAuth();
+  const router = useRouter();
+  const { user, signOut } = useAuth();
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  });
 
   const uploadPhoto = async (event) => {
     event.preventDefault();
@@ -75,7 +83,6 @@ export default function Add() {
       image: publicURL,
       user: user.user_metadata.user_name,
     };
-    console.log(newQuestion);
     setCurrentQuestion(newQuestion);
     setPreview(!preview);
   };
@@ -95,30 +102,30 @@ export default function Add() {
   return (
     <>
       <AppLayout>
-        {user ? (
+        {user && (
           <User
             userName={user.user_metadata.user_name}
             avatar={user.user_metadata.avatar_url}
             signout={signOut}
           />
-        ) : (
-          <Login handle={signIn} />
         )}
+
         {hide ? <Feedback {...feedback} /> : null}
         {preview && (
-          <>
+          <BannerWithImage
+            handle={() => {
+              setPreview(false);
+            }}
+            preview={preview}
+          >
             <Pregunta
-              pregunta={currentQuestion.pregunta}
-              image={imageName}
-              respuestas={currentQuestion.respuestas}
+              {...currentQuestion}
               handle={() => {
                 console.log("preview");
               }}
             />
-            <button type="button" onClick={confirm}>
-              Guardar
-            </button>
-          </>
+            <button onClick={confirm}>Añadir pregunta</button>
+          </BannerWithImage>
         )}
         {!preview & !hide && (
           <>

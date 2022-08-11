@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import AppLayout from "../components/AppLayout";
+import BannerWithImage from "../components/bannerWithImage";
 import Error from "../components/error";
-import Login from "../components/login";
 import Pregunta from "../components/pregunta";
 import User from "../components/user";
 import { useAuth } from "../utils/auth";
@@ -11,10 +12,16 @@ export default function Preguntas({ lessons }) {
   const [questions] = useState(lessons);
   const [preview, setPreview] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(null);
-  const { user, signOut, signIn } = useAuth();
+  const { user, signOut } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      router.replace("/");
+    }
+  });
 
   const save = async () => {
-    // Delete question from possibles questions
     const { errorDelete } = await supabase
       .from("preguntas_posibles")
       .delete()
@@ -35,15 +42,14 @@ export default function Preguntas({ lessons }) {
 
   return (
     <AppLayout>
-      {user ? (
+      {user && (
         <User
           userName={user.user_metadata.user_name}
           avatar={user.user_metadata.avatar_url}
           signout={signOut}
         />
-      ) : (
-        <Login handle={signIn} />
       )}
+
       {questions.length === 0 && (
         <Error
           texto="¡Ups! Parece que el asturiano está cerrado y todavía no hay ninguna pregunta"
@@ -56,7 +62,6 @@ export default function Preguntas({ lessons }) {
             key={idx}
             onClick={(event) => {
               setPreview(true);
-              const idx = event.target.id;
               setCurrentQuestion(questions[idx]);
             }}
           >
@@ -66,15 +71,22 @@ export default function Preguntas({ lessons }) {
       })}
       {preview && (
         <section>
-          <button onClick={save}>Añadir pregunta</button>
-          <Pregunta
-            pregunta={currentQuestion.pregunta}
-            image={currentQuestion.image}
-            respuestas={currentQuestion.respuestas}
+          <BannerWithImage
             handle={() => {
-              console.log("preview");
+              setPreview(false);
             }}
-          />
+            preview={preview}
+          >
+            <Pregunta
+              pregunta={currentQuestion.pregunta}
+              image={currentQuestion.imag ?? "./images/luimelia.jpeg"}
+              respuestas={currentQuestion.respuestas}
+              handle={() => {
+                console.log("preview");
+              }}
+            />
+            <button onClick={save}>Añadir pregunta</button>
+          </BannerWithImage>
         </section>
       )}
 
@@ -113,6 +125,8 @@ export default function Preguntas({ lessons }) {
           border-radius: 5px;
           margin-top: 1rem;
           cursor: pointer;
+          margin: 0 auto;
+          margin-bottom: 1rem;
         }
         h2 {
           text-align: center;
