@@ -3,6 +3,7 @@ import Error from "../components/error";
 import Twitter from "../components/twitter";
 import useTweet from "../hooks/useTweet";
 import { supabase } from "../utils/supabase";
+import Image from "next/image";
 
 export default function Resultado({ data }) {
   return (
@@ -15,7 +16,12 @@ export default function Resultado({ data }) {
               {data.userName}, has conseguido {data.puntuacion}
             </h3>
             <h1>{data.resultado.titulo}</h1>
-            <img src={data.resultado.imagen} width="100%" />
+            <Image
+              src={`/images/${data.resultado.imagen}`}
+              alt={data.resultado.imagen}
+              width={500}
+              height={270}
+            />
             <p>{data.resultado.texto}</p>
             <a href={useTweet(data)}>
               <Twitter />
