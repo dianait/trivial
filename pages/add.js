@@ -27,7 +27,7 @@ export default function Add() {
   const [preview, setPreview] = useState(false);
   const [feedback, setFeedback] = useState(fb.ok);
   const [currentQuestion, setCurrentQuestion] = useState(null);
-  const [imageName, setImageName] = useState("");
+  const [imageName] = useState("");
   const router = useRouter();
   const { user, signOut } = useAuth();
 
@@ -62,7 +62,7 @@ export default function Add() {
 
   const saveQuestion = async (evt) => {
     evt.preventDefault();
-    const { publicURL, error } = supabase.storage
+    const {  error } = supabase.storage
       .from("images")
       .getPublicUrl(`${imageName}`);
     if (error) {
