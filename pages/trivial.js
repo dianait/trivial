@@ -33,8 +33,8 @@ export default function Home({ lessons }) {
   };
 
   const insertRanking = async (ranking) => {
+    deletePreviousRanking()
     const { data, error } = await supabase.from("ranking").insert([ranking]);
-    localStorage.setItem("resultado", data[0].id);
     if (error) {
       console.log(error);
     }
@@ -52,9 +52,6 @@ export default function Home({ lessons }) {
 
   useEffect(() => {
     if (idx === questions.length) {
-      if (localStorage.getItem("resultado")) {
-        deletePreviousRanking();
-      }
       const ranking = createRanking();
       insertRanking(ranking);
       router.replace(`/@${user.user_metadata.user_name}`);
