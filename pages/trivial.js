@@ -24,20 +24,10 @@ export default function Home({ lessons }) {
     }
   });
 
-  const deletePreviousRanking = async () => {
-    const { error } = await supabase
-      .from("ranking")
-      .delete()
-      .match({ userName: user.user_metadata.user_name });
+  const insertRanking = async () => {
+    let ranking = createRanking()
+    const { error } = await supabase.from('ranking').upsert(ranking)
     if (error) console.log(error);
-  };
-
-  const insertRanking = async (ranking) => {
-    deletePreviousRanking()
-    const { error } = await supabase.from("ranking").insert([ranking]);
-    if (error) {
-      console.log(error);
-    }
   };
 
   const createRanking = () => {
@@ -52,8 +42,7 @@ export default function Home({ lessons }) {
 
   useEffect(() => {
     if (idx === questions.length) {
-      const ranking = createRanking();
-      insertRanking(ranking);
+      insertRanking();
       router.replace(`/@${user.user_metadata.user_name}`);
     } else {
       setQuestion(questions[idx]);
