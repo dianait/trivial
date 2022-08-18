@@ -3,7 +3,7 @@ export default function Aviso() {
     <>
       <p>
         🛠️ &nbsp;&nbsp;Todavía en construcción, igual falla algo, 
-        también quiero que se puedan subir también imágenes.
+         quiero que se puedan subir también imágenes.
          Ya tengo a Sebas trabajando en ello.
       </p>
       <style jsx>{`
