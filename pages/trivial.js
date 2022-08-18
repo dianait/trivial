@@ -25,7 +25,7 @@ export default function Home({ lessons }) {
   });
 
   const insertRanking = async () => {
-    let ranking = createRanking()
+    const ranking = createRanking()
     const { error } = await supabase.from('ranking').upsert(ranking)
     if (error) console.log(error);
   };
