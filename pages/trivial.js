@@ -34,7 +34,7 @@ export default function Home({ lessons }) {
 
   const insertRanking = async (ranking) => {
     deletePreviousRanking()
-    const { data, error } = await supabase.from("ranking").insert([ranking]);
+    const { error } = await supabase.from("ranking").insert([ranking]);
     if (error) {
       console.log(error);
     }
