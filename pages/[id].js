@@ -27,6 +27,7 @@ export default function Resultado({ data }) {
               <Twitter />
               &nbsp;&nbsp; Compartir en twitter
             </a>
+            <a href="/"> 🥐 JUGAR OTRA VEZ 🌙 </a>
           </>
         ) : (
           <Error

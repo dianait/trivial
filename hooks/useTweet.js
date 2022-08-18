@@ -6,7 +6,7 @@ export default function useTweet(user) {
   useEffect(() => {
     const tweetInfo = {
       text: `He sacado un ${user.puntuacion} en el Trivial Luimelier 🥐 ¡Haz el tuyo!`,
-      url: `${window.location.hostname}/${user.userName}`,
+      url: `${window.location.hostname}`,
     };
 
     const urlTweet = getUrlShareTwitter(tweetInfo);
@@ -23,3 +23,6 @@ function getUrlShareTwitter({ text, url }) {
   const hashtags = `&hashtags=lumelia`;
   return BASE_URL + content + link + hashtags;
 }
+
+
+// /${user.userName}
