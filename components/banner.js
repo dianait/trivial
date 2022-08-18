@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Link from "next/link";
+
 export default function Banner() {
   const [hide, setHide] = useState(true);
   return (
@@ -16,7 +18,10 @@ export default function Banner() {
             👋 ¿Se te ocurre alguna pregunta? <br />
             Compartir es vivir
           </h3>
-          <a href="/add">Añadir pregunta</a>
+          <Link href="/add">
+          <a>Añadir pregunta</a>
+          </Link>
+          
           <br />
           <br />
           <style jsx>{`

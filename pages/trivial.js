@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import AppLayout from "../components/AppLayout";
-// import Banner from "../components/banner";
+import Banner from "../components/banner";
 import Counter from "../components/counter";
 import Pregunta from "../components/pregunta";
 import User from "../components/user";
@@ -94,7 +94,7 @@ export default function Home({ lessons }) {
               handle={handle}
             />
           )}
-          {/* <Banner /> */}
+          <Banner />
         </>
       </AppLayout>
       <style jsx>{`

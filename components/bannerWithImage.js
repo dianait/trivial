@@ -21,10 +21,12 @@ export default function BannerWithImage({ children, handle, preview }) {
               font-size: 1.3rem;
               padding-top: 16px;
               cursor: pointer;
+              z-index: 1000;
             }
             section {
               left: 0;
               color: white;
+              max-width: 100%;
               position: fixed;
               bottom: 0;
               display: flex;
@@ -34,6 +36,7 @@ export default function BannerWithImage({ children, handle, preview }) {
               animation-duration: 3s;
               animation-name: slidein;
               border: 1px solid #ccc;
+              padding-top: 64px;
               border-radius: 5px;
             }
             @keyframes slidein {

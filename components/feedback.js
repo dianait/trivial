@@ -12,8 +12,8 @@ export default function Feedback({ img, texto }) {
         alt={img}
       />
       <h3 dangerouslySetInnerHTML={{ __html: texto }} />
-      <Link href="/add">
-        <a>Otra pregunta</a>
+      <Link href="/">
+        <a>Inicio</a>
       </Link>
       <style jsx>{`
         h3 {

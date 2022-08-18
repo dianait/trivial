@@ -2,8 +2,9 @@ export default function Aviso() {
   return (
     <>
       <p>
-        🛠️ &nbsp;&nbsp;Todavía en construcción, igual la imagen no se muestra
-        correctamente. Ya tengo a Sebas trabajando en ello.
+        🛠️ &nbsp;&nbsp;Todavía en construcción, igual falla algo, 
+        también quiero que se puedan subir también imágenes.
+         Ya tengo a Sebas trabajando en ello.
       </p>
       <style jsx>{`
         p {

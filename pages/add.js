@@ -37,28 +37,28 @@ export default function Add() {
     }
   });
 
-  const uploadPhoto = async (event) => {
-    event.preventDefault();
-    if (event.currentTarget.files && event.currentTarget.files[0]) {
-      const avatarFile = event.currentTarget.files[0];
+  // const uploadPhoto = async (event) => {
+  //   event.preventDefault();
+  //   if (event.currentTarget.files && event.currentTarget.files[0]) {
+  //     const avatarFile = event.currentTarget.files[0];
 
-      const imageName = avatarFile.name;
-      const { data, error } = await supabase.storage
-        .from("images")
-        .upload(imageName, avatarFile, {
-          cacheControl: "3600",
-          upsert: false,
-        });
+  //     const imageName = avatarFile.name;
+  //     const { data, error } = await supabase.storage
+  //       .from("images")
+  //       .upload(imageName, avatarFile, {
+  //         cacheControl: "3600",
+  //         upsert: false,
+  //       });
 
-      if (error) console.log(error);
-      else {
-        console.log(data);
-        setImageName(imageName);
-        console.log(imageName);
-        console.log(`Se ha guardado la imagen ${imageName} correctamente`);
-      }
-    }
-  };
+  //     if (error) console.log(error);
+  //     else {
+  //       console.log(data);
+  //       setImageName(imageName);
+  //       console.log(imageName);
+  //       console.log(`Se ha guardado la imagen ${imageName} correctamente`);
+  //     }
+  //   }
+  // };
 
   const saveQuestion = async (evt) => {
     evt.preventDefault();
@@ -80,7 +80,7 @@ export default function Add() {
           { text: incorrecta2.value, isCorrect: false },
         ],
       },
-      image: publicURL,
+      image: "luimelia.jpeg",
       user: user.user_metadata.user_name,
     };
     setCurrentQuestion(newQuestion);
@@ -119,10 +119,9 @@ export default function Add() {
             preview={preview}
           >
             <Pregunta
-              {...currentQuestion}
-              handle={() => {
-                console.log("preview");
-              }}
+              pregunta={currentQuestion.pregunta}
+              respuestas={currentQuestion.respuestas}
+              image={currentQuestion.image}
             />
             <button onClick={confirm}>Añadir pregunta</button>
           </BannerWithImage>
@@ -159,12 +158,12 @@ export default function Add() {
                 placeholder="Respuesta incorrecta"
                 // required
               />
-              <input
+              {/* <input
                 type="file"
                 name="image"
                 placeholder="Imagen"
                 onChange={uploadPhoto}
-              />
+              /> */}
               <button type="submit">Ver preview</button>
             </form>
           </>
