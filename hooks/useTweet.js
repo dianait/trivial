@@ -6,7 +6,7 @@ export default function useTweet(user) {
   useEffect(() => {
     const tweetInfo = {
       text: `He sacado un ${user.puntuacion} en el Trivial Luimelier 🥐 ¡Haz el tuyo!`,
-      url: `${window.location.hostname}`,
+      url: `${window.location.hostname}/${user.userName}`,
     };
 
     const urlTweet = getUrlShareTwitter(tweetInfo);
@@ -25,6 +25,3 @@ function getUrlShareTwitter({ text, url }) {
   console.log();
   return BASE_URL + content + link  + authors + hashtags;
 }
-
-
-// /${user.userName}
