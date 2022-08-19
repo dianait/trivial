@@ -11,17 +11,19 @@ export default function useTweet(user) {
 
     const urlTweet = getUrlShareTwitter(tweetInfo);
     setTweet(urlTweet);
-  }, [user]);
+  });
 
   return tweet;
-}
+} 
 
 function getUrlShareTwitter({ text, url }) {
   const BASE_URL = "https://twitter.com/intent/tweet";
   const content = `?text=${encodeURI(text)}`;
+  const authors =  ". Hecho con 🤙 y ♥️ por @laDids y @lerhus"
   const link = `&url=${url}`;
-  const hashtags = `&hashtags=lumelia`;
-  return BASE_URL + content + link + hashtags;
+  const hashtags = `&hashtags=Luimelia`;
+  console.log();
+  return BASE_URL + content + link  + authors + hashtags;
 }
 
 
