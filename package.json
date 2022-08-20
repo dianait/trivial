@@ -31,8 +31,14 @@
     "prettier": "2.7.1",
     "standard": "17.0.0"
   },
+   "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
     "*.{js,css,md}": "prettier --write"
   }
+
 }
