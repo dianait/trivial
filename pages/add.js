@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
 import AppLayout from "../components/AppLayout";
 import Aviso from "../components/aviso";
@@ -28,9 +27,7 @@ export default function Add() {
   const [feedback, setFeedback] = useState(fb.ok);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [imageName] = useState("");
-  const router = useRouter();
   const { user, signOut } = useAuth();
-
 
   // const uploadPhoto = async (event) => {
   //   event.preventDefault();
@@ -57,7 +54,7 @@ export default function Add() {
 
   const saveQuestion = async (evt) => {
     evt.preventDefault();
-    const {  error } = supabase.storage
+    const { error } = supabase.storage
       .from("images")
       .getPublicUrl(`${imageName}`);
     if (error) {
