@@ -18,6 +18,12 @@ export default function Home({ lessons }) {
   const { user, signOut } = useAuth();
   const router = useRouter();
 
+  useEffect(() => {
+    if (!user) {
+      router.replace("/");
+    }
+  });
+
   const insertRanking = async () => {
     const ranking = createRanking()
     const { error } = await supabase.from('ranking').upsert(ranking)
