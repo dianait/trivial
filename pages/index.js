@@ -4,7 +4,7 @@ import Index from "../components/index";
 import { useAuth } from "../utils/auth";
 
 export default function Home() {
-  const { user, signIn } = useAuth();
+  const { signIn } = useAuth();
   const router = useRouter();
 
   const handleSignIn = () => {
