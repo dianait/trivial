@@ -15,12 +15,6 @@ export default function Preguntas({ lessons }) {
   const { user, signOut } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!user) {
-      router.replace("/");
-    }
-  });
-
   const save = async () => {
     const { errorDelete } = await supabase
       .from("preguntas_posibles")

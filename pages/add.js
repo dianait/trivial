@@ -31,11 +31,6 @@ export default function Add() {
   const router = useRouter();
   const { user, signOut } = useAuth();
 
-  useEffect(() => {
-    if (!user) {
-      router.push("/");
-    }
-  });
 
   // const uploadPhoto = async (event) => {
   //   event.preventDefault();

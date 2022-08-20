@@ -77,6 +77,7 @@ export default function Home({ lessons }) {
               pregunta={question.pregunta}
               respuestas={question.respuestas}
               image={question.image}
+              user={question.user}
               handle={handle}
             />
           )}
