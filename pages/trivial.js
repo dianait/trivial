@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import AppLayout from "../components/AppLayout";
 import Banner from "../components/banner";
@@ -16,13 +15,6 @@ export default function Home({ lessons }) {
   const [fails, setFails] = useState(0);
   const [corrects, setCorrects] = useState(0);
   const { user, signOut } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!user) {
-      router.replace("/");
-    }
-  });
 
   const insertRanking = async () => {
     const ranking = createRanking()
