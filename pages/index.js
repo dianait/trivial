@@ -8,12 +8,6 @@ export default function Home() {
   const { user, signIn } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    if (user) {
-      router.push("/trivial");
-    }
-  });
-
   const handleSignIn = () => {
     signIn();
     router.push("/trivial");
