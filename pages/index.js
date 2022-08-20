@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import AppLayout from "../components/AppLayout";
 import Index from "../components/index";
 import { useAuth } from "../utils/auth";
