@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AppLayout from "../components/AppLayout";
 import BannerWithImage from "../components/bannerWithImage";
 import Error from "../components/error";

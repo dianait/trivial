@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AppLayout from "../components/AppLayout";
 import Aviso from "../components/aviso";
 import Feedback from "../components/feedback";
