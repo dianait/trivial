@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
 import AppLayout from "../components/AppLayout";
 import BannerWithImage from "../components/bannerWithImage";
@@ -13,7 +12,6 @@ export default function Preguntas({ lessons }) {
   const [preview, setPreview] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const { user, signOut } = useAuth();
-  const router = useRouter();
 
   const save = async () => {
     const { errorDelete } = await supabase
