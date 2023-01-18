@@ -2,11 +2,17 @@
   "name": "trivial",
   "version": "0.1.0",
   "private": true,
+  "simple-webp-converter": {
+    "src": "public/images/**/*.{png,jpg,jpeg,JPG,PNG}"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "webp": "simple-webp-converter",
+    "opt": "simple-webp-converter && node ./scripts/removeRawImages.js",
+    "rm": "node ./scripts/removeRawImages.js",
     "test": "jest --watch",
     "prepare": "husky install"
   },
@@ -14,7 +20,9 @@
     "@supabase/supabase-js": "1.35.4",
     "next": "12.2.3",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "fs": "0.0.1-security",
+    "simple-webp-converter": "^1.0.3"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.16.5",

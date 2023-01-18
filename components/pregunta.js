@@ -14,7 +14,7 @@ export default function Pregunta({ pregunta, respuestas, user, image, handle = (
         <a href={`https://twitter.com/${user}`}>{` por @${user} 🙏`}</a>
       </>
       }
-      <img  src={`./images/${image}`} width={"95%"} alt={image} style={{marginLeft: ".8rem"}}/>
+      <img  src={`./images/${image}.webp`} width={"95%"} alt={image} style={{marginLeft: ".8rem"}}/>
 
       {respuestas != null &&
         answerShuffled.map((respuesta, idx) => {
