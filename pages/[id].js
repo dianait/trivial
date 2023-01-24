@@ -17,7 +17,7 @@ export default function Resultado({ data }) {
             </h3>
             <h1>{data.resultado.titulo}</h1>
             <Image
-              src={`/images/${data.resultado.imagen}`}
+              src={`/images/${data.resultado.imagen}.webp`}
               alt={data.resultado.imagen}
               width={500}
               height={270}
