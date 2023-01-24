@@ -11,7 +11,7 @@ export default function AppLayout({ children }) {
         <a href="/">
           <header>
             <h1>TRIVIAL 🥐</h1>
-            <img src="/images/logo.png" width="70%" />
+            <img src="/images/logo.webp" width="70%" />
           </header>
         </a>
         {children}
