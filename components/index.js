@@ -1,29 +1,17 @@
-import Login from "./loginButton";
+import Link from "next/link";
 
-export default function Index({ handle }) {
+export default function Index() {
   return (
     <>
       <h3>
         ¿Crees saberlo de todo de nuestra pareja preferida?
         <br />
-        Inicia sesion con twitter y ¡Demuéstralo!{" "}
+        ¡Demuéstralo!
       </h3>
-      <Login handle={handle} />
+      <br />
+      <Link href="/trivial" >Empezar</Link>
       <img src="./images/luimeliaAsturiano.webp" />
       <style jsx>{`
-        button {
-          display: flex;
-          align-items: center;
-          justify-content: space-around;
-          background-color: #2b8cc9;
-          color: white;
-          width: 240px;
-          height: 50px;
-          font-size: 1.2rem;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-        }
         img {
           margin-top: 2rem;
           border-radius: 10px;

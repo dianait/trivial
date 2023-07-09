@@ -3,15 +3,12 @@ import AppLayout from "../components/AppLayout";
 import BannerWithImage from "../components/bannerWithImage";
 import Error from "../components/error";
 import Pregunta from "../components/pregunta";
-import User from "../components/user";
-import { useAuth } from "../utils/auth";
 import { supabase } from "../utils/supabase";
 
 export default function Preguntas({ lessons }) {
   const [questions] = useState(lessons);
   const [preview, setPreview] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(null);
-  const { user, signOut } = useAuth();
 
   const save = async () => {
     const { errorDelete } = await supabase
@@ -34,14 +31,6 @@ export default function Preguntas({ lessons }) {
 
   return (
     <AppLayout>
-      {user && (
-        <User
-          userName={user.user_metadata.user_name}
-          avatar={user.user_metadata.avatar_url}
-          signout={signOut}
-        />
-      )}
-
       {questions.length === 0 && (
         <Error
           texto="¡Ups! Parece que el asturiano está cerrado y todavía no hay ninguna pregunta"

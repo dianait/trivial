@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import AppLayout from "../components/AppLayout";
 import Index from "../components/index";
+import Banner from "../components/banner";
 import { useAuth } from "../utils/auth";
 
 export default function Home() {
@@ -22,7 +23,8 @@ export default function Home() {
   return (
     <>
       <AppLayout>
-        <Index handle={handleSignIn} />
+        <Index />
+        <Banner />
       </AppLayout>
     </>
   );

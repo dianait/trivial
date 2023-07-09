@@ -12,17 +12,15 @@ export default function Resultado({ data }) {
         {data ? (
           <>
             <h3>
-              <img className="userAvatar" src={data.avatar} />
-              {data.userName}, has conseguido {data.puntuacion}
             </h3>
-            <h1>{data.resultado.titulo}</h1>
+            <h1>{data.titulo}</h1>
             <Image
-              src={`/images/${data.resultado.imagen}.webp`}
-              alt={data.resultado.imagen}
+              src={`/images/${data.imagen}`}
+              alt={data.imagen}
               width={500}
               height={270}
             />
-            <p>{data.resultado.texto}</p>
+            <p>{data.texto}</p>
             <a href={useTweet(data)}>
               <Twitter />
               &nbsp;&nbsp; Compartir en twitter
@@ -88,11 +86,12 @@ export default function Resultado({ data }) {
 
 Resultado.getInitialProps = async (ctx) => {
   const { query } = ctx;
-  const name = query.id;
+  let puntuacion = query.id;
+
   const raw = await supabase
-    .from("ranking")
-    .select(`userName,puntuacion, avatar, resultado(imagen, texto, titulo)`)
-    .eq("userName", name)
+    .from("resultados")
+    .select(`*`)
+    .eq("id", puntuacion)
     .single();
   return { data: raw.body };
 };

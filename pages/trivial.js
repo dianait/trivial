@@ -1,11 +1,8 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import AppLayout from "../components/AppLayout";
-import Banner from "../components/banner";
 import Counter from "../components/counter";
 import Pregunta from "../components/pregunta";
-import User from "../components/user";
-import { useAuth } from "../utils/auth";
 import { supabase } from "../utils/supabase";
 import { getPercent, getTextResult, shuffle } from "../utils/utils";
 
@@ -15,14 +12,7 @@ export default function Home({ lessons }) {
   const [question, setQuestion] = useState(lessons[idx]);
   const [fails, setFails] = useState(0);
   const [corrects, setCorrects] = useState(0);
-  const { user, signOut } = useAuth();
   const router = useRouter();
-
-  useEffect(() => {
-    if (!user) {
-      router.replace("/");
-    }
-  });
 
   const insertRanking = async () => {
     const ranking = createRanking()
@@ -33,9 +23,8 @@ export default function Home({ lessons }) {
   const createRanking = () => {
     return {
       id: +Date.now(),
-      userName: `@${user.user_metadata.user_name}`,
+      userName: `@dianait`,
       puntuacion: `${corrects}/${questions.length}`,
-      avatar: user.user_metadata.avatar_url,
       resultado: getTextResult(getPercent(corrects, questions.length)),
     };
   };
@@ -43,7 +32,8 @@ export default function Home({ lessons }) {
   useEffect(() => {
     if (idx === questions.length) {
       insertRanking();
-      router.replace(`/@${user.user_metadata.user_name}`);
+      let resultado = getTextResult(getPercent(corrects, questions.length))
+      router.replace(`${resultado}`);
     } else {
       setQuestion(questions[idx]);
     }
@@ -63,13 +53,6 @@ export default function Home({ lessons }) {
     <>
       <AppLayout>
         <>
-          {user && (
-            <User
-              userName={user.user_metadata.user_name}
-              avatar={user.user_metadata.avatar_url}
-              signout={signOut}
-            />
-          )}
           <Counter correctCount={corrects} failsCount={fails} />
           {idx < questions.length && (
             <Pregunta
@@ -81,7 +64,6 @@ export default function Home({ lessons }) {
               handle={handle}
             />
           )}
-          <Banner />
         </>
       </AppLayout>
       <style jsx>{`
